@@ -31,6 +31,10 @@
   java -DFILE_PATH=XXX -jar markdown-toc-0.0.1-SNAPSHOT.jar
   ```
 
+
+### bat 例子
+docs-generator-directory-push.bat  [GitHub](https://github.com/Darian1996/docs/tree/master/other_video/2019-sofaware/docs-generator-directory-push.bat)   [Gitee](https://gitee.com/Darian1996/docs/tree/master/other_video/2019-sofaware/docs-generator-directory-push.bat) 
+
 ## example
 
 就会生成目录了
