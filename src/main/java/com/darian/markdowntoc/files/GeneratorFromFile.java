@@ -57,7 +57,7 @@ public class GeneratorFromFile {
     /**
      * 可以跳过的文件夹的名称
      */
-    static List<String> INGORE_DIRECTORIES = Arrays.asList(".git", ".idea", "TopNtest.class", "旧",
+    public static List<String> INGORE_DIRECTORIES = Arrays.asList(".git", ".idea", "TopNtest.class", "旧",
             "assets", "photo", "viso", "图片", "LoveHistory", "胜天半子");
 
 
@@ -231,26 +231,38 @@ public class GeneratorFromFile {
      * @param filePath
      */
     public static void filePathToUrlPre(String filePath) {
+        getGitHubUrlPre(filePath);
+        getGiteeUrlPre(filePath);
+    }
+
+    public static String getGitHubUrlPre(String filePath) {
         String findGitRepositoryName = findGitRepositoryName(filePath);
         if (findGitRepositoryName == null) {
             log.error(AssertionException.GIT_REPOSITORY_NAME_NOT_FOUND);
-            return;
+            return null;
         }
-
         String git_file_pre = filePath.substring(filePath.indexOf(findGitRepositoryName) + findGitRepositoryName.length())
                 .replaceAll("\\\\", "/");
-
         GITHUB_AUTHOR_NAME = GITHUB_AUTHOR_NAME != null ? GITHUB_AUTHOR_NAME : GIT_AUTHOR_NAME;
-        GITEE_AUTHOR_NAME = GITEE_AUTHOR_NAME != null ? GITEE_AUTHOR_NAME : GIT_AUTHOR_NAME;
-
         String github_repository_Url = "https://github.com/" + GITHUB_AUTHOR_NAME + "/" + findGitRepositoryName + "/tree/" + GIT_BRANCH;
-        String gitee_repository_Url = "https://gitee.com/" + GITEE_AUTHOR_NAME + "/" + findGitRepositoryName + "/tree/" + GIT_BRANCH;
-
         GITHUB_URL_PRE = github_repository_Url + git_file_pre;
-        GITEE_URL_PRE = gitee_repository_Url + git_file_pre;
-
         GITHUB_URL_PRE = GITHUB_URL_PRE.replaceAll("\\\\", "/").replaceAll(" ", "%20");
+        return GITHUB_URL_PRE;
+    }
+
+    public static String getGiteeUrlPre(String filePath) {
+        String findGitRepositoryName = findGitRepositoryName(filePath);
+        if (findGitRepositoryName == null) {
+            log.error(AssertionException.GIT_REPOSITORY_NAME_NOT_FOUND);
+            return null;
+        }
+        String git_file_pre = filePath.substring(filePath.indexOf(findGitRepositoryName) + findGitRepositoryName.length())
+                .replaceAll("\\\\", "/");
+        GITEE_AUTHOR_NAME = GITEE_AUTHOR_NAME != null ? GITEE_AUTHOR_NAME : GIT_AUTHOR_NAME;
+        String gitee_repository_Url = "https://gitee.com/" + GITEE_AUTHOR_NAME + "/" + findGitRepositoryName + "/tree/" + GIT_BRANCH;
+        GITEE_URL_PRE = gitee_repository_Url + git_file_pre;
         GITEE_URL_PRE = GITEE_URL_PRE.replaceAll("\\\\", "/").replaceAll(" ", "%20");
+        return GITEE_URL_PRE;
     }
 
     /**
