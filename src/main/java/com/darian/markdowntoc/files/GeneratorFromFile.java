@@ -28,30 +28,30 @@ public class GeneratorFromFile {
      * GitHub 的作者的名字，作者的名字，需要拼接在 URL 中
      * 优先级 ， GitHub / Gitee 优先于 Git
      */
-    static String GIT_AUTHOR_NAME = "Darian1996";
-    static String GITHUB_AUTHOR_NAME = null;
-    static String GITEE_AUTHOR_NAME = null;
+    public static String GIT_AUTHOR_NAME = "Darian1996";
+    public static String GITHUB_AUTHOR_NAME = null;
+    public static String GITEE_AUTHOR_NAME = null;
     /**
      * 生成的分支的名称，如果要生成其他分支，需要把 对应的文件夹，切换成对应的分支
      */
-    static String GIT_BRANCH = "master";
+    public static String GIT_BRANCH = "master";
 
-    static String README_DIRECTORY_DOC = null;
-    static String README_DIRECTORY_DOC_FILENAME = "README_DIRECTORY_DOC.md";
+    public static String README_DIRECTORY_DOC = null;
+    public static String README_DIRECTORY_DOC_FILENAME = "README_DIRECTORY_DOC.md";
 
-    static String FILE_PATH = "D:\\GitHub_Repositories\\docs\\other_video\\23_设计模式";
-    static String GITHUB_URL_PRE = null;
-    static String GITEE_URL_PRE = null;
-    static String OTHER_URL_PRE = "";
+    public static String FILE_PATH = "D:\\GitHub_Repositories\\docs\\other_video\\23_设计模式";
+    public static String GITHUB_URL_PRE = null;
+    public static String GITEE_URL_PRE = null;
+    public static String OTHER_URL_PRE = "";
 
     /**
      * 需要匹配规则的文件  例子 .md 结尾的文件
      */
-    static String PATTERN_STRING = "\\\\*\\.md";
+    public static String PATTERN_STRING = "\\\\*\\.md|\\\\*\\.bat";
 
-    static boolean WRITE_TO_FILE = false;
+    public static boolean WRITE_TO_FILE = false;
 
-    static String GIT_PATH_FILE_NAME = ".git";
+    public static String GIT_PATH_FILE_NAME = ".git";
 
 
     /**
@@ -88,7 +88,7 @@ public class GeneratorFromFile {
 
         README_DIRECTORY_DOC_FILENAME = System.getProperty("README_DIRECTORY_DOC_FILENAME", "README_DIRECTORY_DOC.md");
         OTHER_URL_PRE = System.getProperty("OTHER_URL_PRE");
-        PATTERN_STRING = System.getProperty("PATTERN_STRING", "\\\\*\\.md");
+        PATTERN_STRING = System.getProperty("PATTERN_STRING", "\\\\*\\.md|\\\\*\\.bat");
         String WRITE_TO_FILE_STRING = System.getProperty("WRITE_TO_FILE", "false");
         WRITE_TO_FILE = "true".equalsIgnoreCase(WRITE_TO_FILE_STRING);
 
@@ -107,7 +107,7 @@ public class GeneratorFromFile {
         if (README_DIRECTORY_DOC == null || README_DIRECTORY_DOC.isBlank()) {
             sb.append("    {\n");
             sb.append("      while generator to file ["
-                    + FILE_PATH + GIT_PATH_FILE_NAME + "\\" + README_DIRECTORY_DOC_FILENAME
+                    + FILE_PATH + "\\" + README_DIRECTORY_DOC_FILENAME
                     + "]\n");
             sb.append("    }\n");
         }
@@ -292,12 +292,12 @@ public class GeneratorFromFile {
         return findGitRepositoryName;
     }
 
-    private static void assertTrue(boolean expresion, String errorMsg) {
+    public static void assertTrue(boolean expresion, String errorMsg) {
         if (expresion != true)
             throw new AssertionException(errorMsg);
     }
 
-    private static void assertTrue(boolean expresion) {
+    public static void assertTrue(boolean expresion) {
         if (expresion != true)
             throw new AssertionException();
     }
@@ -323,34 +323,5 @@ public class GeneratorFromFile {
     }
 
 
-    private static void test() {
-        // 正则表达式
-        PATTERN_STRING = "\\\\*\\.md";
-        Pattern.compile(PATTERN_STRING);
-        Pattern pattern = Pattern.compile(PATTERN_STRING);
-        assertTrue(pattern.matcher("asdfasfda.md").find(), "EL表达式不对");
-        assertTrue(!pattern.matcher("asdfasfdamdmd").find(), "EL表达式不对");
-
-        // 找仓库
-        assertTrue(findGitRepositoryName("D:\\GitHub_Repositories") == null);
-        assertTrue("docs".equals(findGitRepositoryName("D:\\GitHub_Repositories\\docs\\other_video\\23_设计模式")));
-        assertTrue("docs".equals(findGitRepositoryName("D:\\GitHub_Repositories\\docs\\other_video")));
-
-        // URL 的前缀
-        filePathToUrlPre("D:\\GitHub_Repositories");
-        assertTrue(GITEE_URL_PRE == null && GITHUB_URL_PRE == null);
-        filePathToUrlPre("D:\\GitHub_Repositories\\docs\\other_video\\23_设计模式");
-
-        assertTrue(GITEE_URL_PRE.equals("https://gitee.com/Darian1996/docs/tree/master/other_video/23_设计模式"));
-        assertTrue(GITHUB_URL_PRE.equals("https://github.com/Darian1996/docs/tree/master/other_video/23_设计模式"));
-
-        filePathToUrlPre("D:\\GitHub_Repositories\\docs\\other_video");
-        assertTrue(GITEE_URL_PRE.equals("https://gitee.com/Darian1996/docs/tree/master/other_video"));
-        assertTrue(GITHUB_URL_PRE.equals("https://github.com/Darian1996/docs/tree/master/other_video"));
-
-        getGitHubUrl();
-        getFileFullNameList("D:\\GitHub_Repositories\\docs\\other_video");
-        System.exit(1);
-    }
 }
 
