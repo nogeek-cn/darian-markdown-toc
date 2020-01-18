@@ -1,4 +1,4 @@
-# darian-markdown-doc
+# darian-markdown-toc
 
 - 自动生成文件夹对应 GitHub / Gitee 上的目录
 
